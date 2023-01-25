@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Popups.module.css';
 import Modal from 'react-modal';
 
-const EnterPass = () => {
+const LockNow = () => {
     const customStyles = {
         content: {
           top: '50%',
@@ -38,4 +38,4 @@ const EnterPass = () => {
     );
 };
 
-export default EnterPass;
+export default LockNow;

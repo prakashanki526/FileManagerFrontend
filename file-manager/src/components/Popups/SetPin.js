@@ -3,7 +3,7 @@ import styles from './Popups.module.css';
 import eye from '../assets/eyeIcon.svg';
 import Modal from 'react-modal';
 
-const SetPass = () => {
+const SetPin = () => {
 
     const customStyles = {
         content: {
@@ -57,4 +57,4 @@ const SetPass = () => {
     );
 };
 
-export default SetPass;
+export default SetPin;
