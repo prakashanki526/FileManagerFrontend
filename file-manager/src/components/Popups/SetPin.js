@@ -2,8 +2,15 @@ import React,{useState} from 'react';
 import styles from './Popups.module.css';
 import eye from '../assets/eyeIcon.svg';
 import Modal from 'react-modal';
+import { setPin } from '../api/discover';
 
-const SetPin = () => {
+
+const SetPin = (props) => {
+
+    const [errorMessage, setErrorMessage] = useState({
+        inputPin: "",
+        confirmPin: ""
+    });
 
     const customStyles = {
         content: {
@@ -13,14 +20,63 @@ const SetPin = () => {
           bottom: 'auto',
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)',
-          boxShadow: '0 0 10px 1px grey',
+        },
+        overlay: {
+            background: "rgb(30, 39, 46,0.8)"
         },
     };
 
     const [type, setType] = useState("password");
+    const [ctype, setcType] = useState("password");
 
-    function handleClick(){
-        setType(type === "text" ? "password" : "text");
+
+    function handleInputPinChange(e){
+        setInputPin(e.target.value);
+    }
+
+    function handleConfirmPinChange(e){
+        setConfirmPin(e.target.value);
+    }
+
+    function handleClick(e){
+        if(e.target.id === "pin"){
+            setType(type === "text" ? "password" : "text");
+        } else {
+            setcType(ctype === "text" ? "password" : "text");
+        }
+    }
+
+    const [inputPin, setInputPin] = useState("");
+    const [confirmPin, setConfirmPin] = useState("");
+
+    async function handleSet(){
+        if(!inputPin){
+            setErrorMessage({inputPin: "** Enter pin first."});
+            return;
+        }
+        if(inputPin.length !== 4){
+            setErrorMessage({inputPin: "** Enter a 4 digit pin."});
+            return;
+        }
+        if(!confirmPin){
+            setErrorMessage({confirmPin: "** Confirm pin first."});
+            return;
+        }
+        if(confirmPin !== inputPin){
+            setErrorMessage({confirmPin: "** Pin didn't match."});
+            return;
+        }
+        setErrorMessage({});
+        if(setPin(inputPin)){
+            props.setIsLoggedIn(true);
+            localStorage.isPinSet = true;
+            localStorage.isLoggedIn = true;
+            props.setIsLoggedIn(true);
+            props.setIsPasswordSet(true);
+        }
+
+        setInputPin("");
+        setConfirmPin("");
     }
 
 
@@ -35,22 +91,30 @@ const SetPin = () => {
                 <div className={styles.content}>
                     <span>Enter New Pin</span><br></br>
                     <div className={styles.inputContainer}>
-                        <input type={type}  name="pincode" maxlength="4"  id="pin" pattern="\d{4}" className={styles.inputField} required/>
+                        <input type={type} value={inputPin} name="pin" maxLength="4" pattern="\d{4}" className={styles.inputField} onChange= 
+                          {handleInputPinChange} required/>
                         <span onClick={handleClick} className={styles.eye}>
-                            <img src={eye} alt="error"></img>
+                            <img src={eye} alt="error" id="pin"></img>
                         </span>
+                    </div>
+                    <div className={styles.errorMessage}>
+                        {errorMessage.inputPin}
                     </div>
                 </div>
                 <div className={styles.content}>
                     <span>Confirm New Pin</span><br></br>
                     <div className={styles.inputContainer}>
-                        <input type={type}  name="pincode" maxlength="4"  id="pin" pattern="\d{4}" className={styles.inputField} required/>
-                        <span onClick={handleClick} className={styles.eye}>
-                            <img src={eye} alt="error"></img>
+                        <input type={ctype} value={confirmPin}  name="pincon" maxLength="4"  pattern="\d{4}" className={styles.inputField} 
+                         onChange={handleConfirmPinChange} required/>
+                        <span onClick={handleClick} className={styles.eye} >
+                            <img src={eye} alt="error" id="pincon"></img>
                         </span>
                     </div>
+                    <div className={styles.errorMessage}>
+                        {errorMessage.confirmPin}
+                    </div>
                 </div>
-                <button className={styles.lockBtn}>Save Changes</button>
+                <button className={styles.lockBtn} onClick={handleSet}>Save Changes</button>
             </div>
             </Modal>
         </div>

@@ -87,7 +87,10 @@
 .inputContainerP{
     margin-top: 70px;
     display: flex;
-    justify-content: space-between;
+    align-items:center;
+    justify-content: center;
+    /* border: 1px solid red; */
+    
 }
 
 .inputFieldP{
@@ -130,4 +133,22 @@
 
 .btnP:active{
     transform: translateY(1px);
+}
+
+.errorMessage{
+    color: red;
+}
+
+.inputStyle{
+    height: 30px;
+    /* margin: 0 10px; */
+    width: 30px !important;
+    border: 1px solid grey;
+}
+
+.containerStyle{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
 }

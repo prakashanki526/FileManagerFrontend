@@ -8,7 +8,7 @@ const WorkFrame = (props) => {
         <div className={styles.container}>
             <div className={styles.upper}>
                 <div className={styles.btnContainer}>
-                    <div className={styles.btn} onClick={()=> props.setIsLoggedIn(0)}>
+                    <div className={styles.btn} onClick={function(){props.setIsLoggedIn(false); localStorage.isLoggedIn = false;}}>
                         <img src={logoutIcon} height="15px" alt="error"></img>
                     </div>
                     <div className={styles.btn} onClick={()=> props.setIsPasswordSet(0)}>
