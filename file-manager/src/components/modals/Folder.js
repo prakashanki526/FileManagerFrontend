@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Modal from 'react-modal';
 import styles from './Folder.module.css';
+import { createFolder } from '../api/discover';
 
 const Folder = (props) => {
     const [folderName, setFolderName] = useState("");
@@ -31,12 +32,18 @@ const Folder = (props) => {
         }
     }
 
-    function handleClick(){
+    async function handleClick(){
         if(!folderName){
             setErrorMessage("** Enter folder name.");
             return;
         }
-        props.setAddFolder(false);
+        const result = await createFolder(folderName);
+        console.log(result);
+        if(result){
+            props.setAddFolder(false);
+        } else {
+            setErrorMessage("Folder already exist.");
+        }
         setFolderName("");
     }
 

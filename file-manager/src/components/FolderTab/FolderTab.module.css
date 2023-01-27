@@ -3,4 +3,20 @@
     padding: 10px;
     margin: 20px 0;
     border-radius: 5px;
+    color: #566474;
+    font-size: 16px;
+}
+
+.container:hover{
+    cursor: pointer;
+    background-color:  rgb(250, 242, 242);
+}
+
+.containerSelected{
+    background-color: #d5d5d5;
+    padding: 10px;
+    margin: 20px 0;
+    border-radius: 5px;
+    color: #566474;
+    font-size: 16px;
 }
