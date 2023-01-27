@@ -5,14 +5,17 @@ import WorkFrame from '../WorkFrame/WorkFrame';
 import SetPin from '../Popups/SetPin';
 import LockNow from '../Popups/LockNow';
 import { getStatus } from '../api/discover';
+import Folder from '../modals/Folder';
 
 const Home = () => {
     const [isPasswordSet, setIsPasswordSet] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [addFolder, setAddFolder] = useState(false);
 
     useEffect(() => {
         async function checkStatus(){
-            if(!localStorage.isPinSet){
+            const pinCheck = localStorage.getItem("isPinSet");
+            if(pinCheck !== "true"){
                 const status = await getStatus();
                 if(status.data){
                     setIsPasswordSet(true);
@@ -20,19 +23,20 @@ const Home = () => {
                     setIsPasswordSet(false);
                 }
             }
-            console.log(!localStorage.isLoggedIn);
-            if(!localStorage.isLoggedIn){
+            const loggedInStatus = localStorage.getItem("isLoggedIn");
+            if(loggedInStatus !== "true"){
                 setIsLoggedIn(false);
             } 
         }
         checkStatus();
-    },[isLoggedIn,isPasswordSet]);
+    },[isPasswordSet]);
 
     return (
         <div className={styles.body}>
-            <Menulist setIsLoggedIn={setIsLoggedIn} />
+            <Menulist setIsLoggedIn={setIsLoggedIn} setAddFolder={setAddFolder} />
             <WorkFrame setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} />
-            {!isPasswordSet ? <SetPin setIsLoggedIn={setIsLoggedIn} isPasswordSet={isPasswordSet} /> : !isLoggedIn && <LockNow setIsLoggedIn={setIsLoggedIn} />}
+            {!isPasswordSet ? <SetPin setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} /> : !isLoggedIn && <LockNow setIsLoggedIn={setIsLoggedIn} />}
+            {addFolder && <Folder setAddFolder={setAddFolder} /> }
         </div>
     );
 };

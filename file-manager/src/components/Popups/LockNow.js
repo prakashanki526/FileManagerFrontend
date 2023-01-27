@@ -24,7 +24,6 @@ const LockNow = (props) => {
 
     async function handleClick(){
         const result = await verifyPin(OTP);
-        console.log(result);
         if(result){
             localStorage.isLoggedIn = true;
             props.setIsLoggedIn(true);

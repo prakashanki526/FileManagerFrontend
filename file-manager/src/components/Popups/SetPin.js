@@ -79,12 +79,14 @@ const SetPin = (props) => {
         setConfirmPin("");
     }
 
+    const check = localStorage.getItem("isPinSet");
 
     return (
         <div>
             <Modal
                 isOpen={true}
                 style={customStyles}
+                onRequestClose={()=> check === "true" && props.setIsPasswordSet(true)}
             >
             <div className={styles.popupContainer}>
                 <div className={styles.title}>Set Pin</div>
