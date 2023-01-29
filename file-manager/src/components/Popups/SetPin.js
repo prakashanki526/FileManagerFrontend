@@ -49,6 +49,12 @@ const SetPin = (props) => {
     const [inputPin, setInputPin] = useState("");
     const [confirmPin, setConfirmPin] = useState("");
 
+    function handleKeyPress(e){
+        if(e.code === "Enter"){
+            handleSet();
+        }
+    }
+
     async function handleSet(){
         if(!inputPin){
             setErrorMessage({inputPin: "** Enter pin first."});
@@ -103,7 +109,7 @@ const SetPin = (props) => {
                     <span>Enter New Pin</span><br></br>
                     <div className={styles.inputContainer}>
                         <input type={type} value={inputPin} name="pin" maxLength="4" pattern="\d{4}"  className={styles.inputField} onChange= 
-                          {handleInputPinChange} required/>
+                          {handleInputPinChange} onKeyPress={handleKeyPress} required autoFocus/>
                         <span onClick={handleClick} className={styles.eye}>
                             <img src={eye} alt="error" id="pin"></img>
                         </span>
@@ -116,7 +122,7 @@ const SetPin = (props) => {
                     <span>Confirm New Pin</span><br></br>
                     <div className={styles.inputContainer}>
                         <input type={ctype} value={confirmPin}  name="pincon" maxLength="4"  pattern="\d{4}" className={styles.inputField} 
-                         onChange={handleConfirmPinChange} required/>
+                         onChange={handleConfirmPinChange} onKeyPress={handleKeyPress} required/>
                         <span onClick={handleClick} className={styles.eye} >
                             <img src={eye} alt="error" id="pincon"></img>
                         </span>

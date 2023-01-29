@@ -21,7 +21,7 @@ const FilesContainer = (props) => {
         <div className={styles.container}>
             {props.fileList.map((file,index)=>{
                 return (
-                    <DisplayFile key={index} fileData={file} />
+                    <DisplayFile key={index} fileData={file} setCurrentFile={props.setCurrentFile} />
                 )
             })}
         </div>

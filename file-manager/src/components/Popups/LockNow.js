@@ -65,6 +65,7 @@ const LockNow = (props) => {
                         inputStyle={styles.inputStyle}
                         containerStyle={styles.containerStyle}
                         isInputNum={true}
+                        shouldAutoFocus={true}
                     />
                 </div>
                 <div className={styles.errorMessage} style={{textAlign: "center", paddingTop: "10px"}}>

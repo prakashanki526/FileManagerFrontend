@@ -54,12 +54,22 @@ const Home = () => {
                     draggable
                     pauseOnHover
                     theme="dark" />
+
             <Menulist setIsLoggedIn={setIsLoggedIn} setAddFolder={setAddFolder} setAddFile={setAddFile} />
-            <WorkFrame setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} fileList={fileList} setFileList={setFileList} toggler={toggler} />
-            {!isPasswordSet ? <SetPin setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} /> : !isLoggedIn && <LockNow setIsLoggedIn={setIsLoggedIn} />}
+
+            <WorkFrame setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} fileList={fileList} setFileList={setFileList} toggler= 
+            {toggler} />
+
+            {!isPasswordSet ? <SetPin setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} /> : !isLoggedIn && <LockNow setIsLoggedIn= 
+             {setIsLoggedIn} />}
+
             {addFolder && <Folder setAddFolder={setAddFolder} type="Folder" /> }
-            {addFile && <Folder setAddFile={setAddFile} type="File" setEditFile={setEditFile} fileList={fileList} setFileName={setFileName} folderName={folderName} /> }
-            {editFile && <EditFile setEditFile={setEditFile} fileName={fileName} folderName={folderName} toggler={toggler} setToggler={setToggler} />}
+
+            {addFile && <Folder setAddFile={setAddFile} type="File" setEditFile={setEditFile} fileList={fileList} setFileName={setFileName} 
+             folderName={folderName} /> }
+             
+            {editFile && <EditFile role="Add" setEditFile={setEditFile} fileName={fileName} folderName={folderName} toggler={toggler} setToggler={setToggler} 
+             />}
         </div>
     );
 };

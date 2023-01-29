@@ -23,7 +23,7 @@ const Folder = (props) => {
         },
     };
 
-    const {folderName} = useParams();
+    // const {folderName} = useParams();
 
     function handleChange(e){
         setInputName(e.target.value);
@@ -89,7 +89,7 @@ const Folder = (props) => {
                     Enter {props.type} Name
                     <div className={styles.inputContainer}>
                         <input type="text" value={inputName} maxLength="15" className={styles.inputField} onChange= 
-                            {handleChange} onKeyPress={handleKeypress} required/>
+                            {handleChange} onKeyPress={handleKeypress} required autoFocus/>
                     </div>
                     <div className={styles.errorMessage} style={{paddingTop: "5px", color: "red"}}>
                         {errorMessage}

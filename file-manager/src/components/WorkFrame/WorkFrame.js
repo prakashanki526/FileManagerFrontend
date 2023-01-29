@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './WorkFrame.module.css';
 import settingIcon from '../assets/settingIcon.svg';
 import logoutIcon from '../assets/logoutIcon.svg';
@@ -6,10 +6,13 @@ import { useLocation } from 'react-router-dom';
 import FilesContainer from '../FilesContainer/FilesContainer';
 
 const WorkFrame = (props) => {
+    const [currentFile, setCurrentFile] = useState("");
+
     const toggler = props.toggler;
 
     const location = useLocation();
-    const breadCrumb = location.pathname.slice(1,location.pathname.length);
+    let breadCrumb = location.pathname.slice(1,location.pathname.length);
+
     return (
         <div className={styles.container}>
             <div className={styles.upper}>
@@ -22,12 +25,12 @@ const WorkFrame = (props) => {
                     </div>
                 </div>
                 <div className={styles.crumbleContainer}>
-                    {breadCrumb + `${breadCrumb && " / "}`}
+                    {breadCrumb + `${breadCrumb && " / "}` + currentFile}
                 </div>
             </div>
             <div className={styles.hr}></div>
             <div className={styles.lower}>
-                <FilesContainer toggler={toggler} fileList={props.fileList} setFileList={props.setFileList} />
+                <FilesContainer toggler={toggler} fileList={props.fileList} setFileList={props.setFileList} setCurrentFile={setCurrentFile} />
             </div>
         </div>
     );
