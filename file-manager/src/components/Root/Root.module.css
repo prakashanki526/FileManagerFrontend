@@ -1,15 +1,13 @@
 .container{
     height: 90%;
     width: 100%;
-    /* border: 1px solid red; */
-    background-color: aliceblue;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .content{
-    color: rgb(170, 169, 169);
+    color: rgb(202, 201, 201);
     font-size: 30px;
     font-weight: bold;
     letter-spacing: 2px;
