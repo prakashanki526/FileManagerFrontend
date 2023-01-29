@@ -30,7 +30,7 @@ const WorkFrame = (props) => {
             </div>
             <div className={styles.hr}></div>
             <div className={styles.lower}>
-                <FilesContainer toggler={toggler} fileList={props.fileList} setFileList={props.setFileList} setCurrentFile={setCurrentFile} />
+                <FilesContainer toggler={toggler} setToggler={props.setToggler} fileList={props.fileList} setFileList={props.setFileList} setCurrentFile={setCurrentFile} />
             </div>
         </div>
     );

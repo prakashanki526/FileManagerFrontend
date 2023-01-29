@@ -58,7 +58,7 @@ const Home = () => {
             <Menulist setIsLoggedIn={setIsLoggedIn} setAddFolder={setAddFolder} setAddFile={setAddFile} />
 
             <WorkFrame setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} fileList={fileList} setFileList={setFileList} toggler= 
-            {toggler} />
+            {toggler} setToggler={setToggler} />
 
             {!isPasswordSet ? <SetPin setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} /> : !isLoggedIn && <LockNow setIsLoggedIn= 
              {setIsLoggedIn} />}

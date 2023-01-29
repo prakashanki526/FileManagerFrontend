@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './FilesContainer.module.css';
 import DisplayFile from '../DisplayFile/DisplayFile';
 import { useParams } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { getFiles } from '../api/discover';
 
 const FilesContainer = (props) => {
     const {folderName} = useParams();
-    const toggler = props.toggler;
+    const refresh = props.toggler;
 
     async function fetchFiles(){
         const files = await getFiles(folderName);
@@ -15,13 +15,13 @@ const FilesContainer = (props) => {
 
     useEffect(()=>{
         fetchFiles();
-    },[folderName,toggler])
+    },[folderName,refresh]);
 
     return (
         <div className={styles.container}>
             {props.fileList.map((file,index)=>{
                 return (
-                    <DisplayFile key={index} fileData={file} setCurrentFile={props.setCurrentFile} />
+                    <DisplayFile key={index} fileData={file} setCurrentFile={props.setCurrentFile} toggler={props.toggler} setToggler={props.setToggler} />
                 )
             })}
         </div>

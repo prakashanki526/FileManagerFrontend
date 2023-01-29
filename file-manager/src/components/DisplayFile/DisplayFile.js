@@ -22,7 +22,7 @@ const DisplayFile = (props) => {
             <div className={styles.fileName}>
                 {props.fileData.name}
             </div>
-            {openFile && <EditFile role="Edit" setOpenFile={setOpenFile} fileName={props.fileData.name} folderName={props.fileData.folder} content={props.fileData.content} />}
+            {openFile && <EditFile role="Edit" setOpenFile={setOpenFile} fileName={props.fileData.name} folderName={props.fileData.folder} content={props.fileData.content} toggler={props.toggler} setToggler={props.setToggler} />}
         </div>
     );
 };

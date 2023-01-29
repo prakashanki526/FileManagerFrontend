@@ -44,6 +44,7 @@ const EditFile = (props) => {
             await createFile(props.fileName, props.folderName, content);
             toast("File saved.");
             props.setOpenFile(false);
+            props.setToggler(!props.toggler);
         }
     }
 
