@@ -3,6 +3,7 @@ import styles from './Popups.module.css';
 import Modal from 'react-modal';
 import OtpInput from 'react-otp-input';
 import { verifyPin } from '../api/discover';
+import { toast } from 'react-toastify';
 
 const LockNow = (props) => {
     const customStyles = {
@@ -23,13 +24,19 @@ const LockNow = (props) => {
     const [errorMessage, setErrorMessage] = useState("");
 
     async function handleClick(){
+        if(!OTP){
+            setErrorMessage("Enter pin first");
+            return;
+        }
         const result = await verifyPin(OTP);
         if(result){
+            toast("Logged In");
             localStorage.isLoggedIn = true;
             props.setIsLoggedIn(true);
             setErrorMessage("");
+            localStorage.isPinSet = true ;
         } else {
-            setErrorMessage("Incorrect Pin");
+            toast("Incorrect Pin");
         }
         setOTP("");
     }

@@ -5,11 +5,14 @@
     border-radius: 5px;
     color: #566474;
     font-size: 16px;
+    display: flex;
+    align-items: center;
 }
 
 .container:hover{
     cursor: pointer;
-    background-color:  rgb(250, 242, 242);
+    /* background-color:  rgb(250, 242, 242); */
+    background-color: rgb(236, 235, 235);
 }
 
 .containerSelected{
@@ -19,4 +22,6 @@
     border-radius: 5px;
     color: #566474;
     font-size: 16px;
+    display: flex;
+    align-items: center;
 }

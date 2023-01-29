@@ -6,11 +6,22 @@ import SetPin from '../Popups/SetPin';
 import LockNow from '../Popups/LockNow';
 import { getStatus } from '../api/discover';
 import Folder from '../modals/Folder';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import EditFile from '../EditFile/EditFile';
+import { useParams } from 'react-router-dom';
 
 const Home = () => {
     const [isPasswordSet, setIsPasswordSet] = useState(true);
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [addFolder, setAddFolder] = useState(false);
+    const [addFile, setAddFile] = useState(false);
+    const [editFile, setEditFile] = useState(false);
+    const [fileName, setFileName] = useState("");
+    const [toggler, setToggler] = useState(true);
+    const [fileList, setFileList] = useState([]);
+    
+    const {folderName} = useParams();
 
     useEffect(() => {
         async function checkStatus(){
@@ -33,10 +44,22 @@ const Home = () => {
 
     return (
         <div className={styles.body}>
-            <Menulist setIsLoggedIn={setIsLoggedIn} setAddFolder={setAddFolder} />
-            <WorkFrame setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} />
+            <ToastContainer position="top-center"
+                    autoClose={1000}
+                    hideProgressBar={true}
+                    newestOnTop={true}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="dark" />
+            <Menulist setIsLoggedIn={setIsLoggedIn} setAddFolder={setAddFolder} setAddFile={setAddFile} />
+            <WorkFrame setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} fileList={fileList} setFileList={setFileList} toggler={toggler} />
             {!isPasswordSet ? <SetPin setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} /> : !isLoggedIn && <LockNow setIsLoggedIn={setIsLoggedIn} />}
-            {addFolder && <Folder setAddFolder={setAddFolder} /> }
+            {addFolder && <Folder setAddFolder={setAddFolder} type="Folder" /> }
+            {addFile && <Folder setAddFile={setAddFile} type="File" setEditFile={setEditFile} fileList={fileList} setFileName={setFileName} folderName={folderName} /> }
+            {editFile && <EditFile setEditFile={setEditFile} fileName={fileName} folderName={folderName} toggler={toggler} setToggler={setToggler} />}
         </div>
     );
 };

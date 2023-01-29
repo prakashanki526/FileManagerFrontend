@@ -1,13 +1,12 @@
 .container{
-    width: 20%;
+    width: 25%;
     height: 100%;
     background-color: #E5E5E5;
-    padding: 0 3rem;
+    /* padding: 0 3rem; */
     position: relative;
 }
 
 .logoContainer{
-    /* border: 1px solid red; */
     height: 3rem;
     margin-top: 2rem;
     position: relative;
@@ -17,6 +16,7 @@
     font-weight: 100;
     display: flex;
     align-items: center;
+    padding: 0 3rem;
 }
 
 .buttonsContainer{
@@ -26,6 +26,7 @@
     margin-top: 3rem;
     align-items: center;
     justify-content: space-between;
+    padding: 0 3rem;
 }
 
 .folderContainer{
@@ -33,8 +34,15 @@
     margin: 10px 0;
     overflow-y: scroll;
     /* border: 1px solid red; */
-    width: 105%;
+    /* width: 105%; */
     padding-right: 30px;
+    padding: 0 2rem 0 3rem;
+}
+
+.btnContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .lockBtn{
@@ -61,4 +69,8 @@
 .lockBtn:active{
     transform: translateY(2px);
     box-shadow: 0 0 15px 3px #9babf7;
+}
+
+.logo:hover{
+    cursor: pointer;
 }

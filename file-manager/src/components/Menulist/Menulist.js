@@ -7,9 +7,13 @@ import lockIcon from '../assets/LockIcon.svg';
 import logo from '../assets/logo.svg'
 import FolderTab from '../FolderTab/FolderTab';
 import { getfolders } from '../api/discover';
+import { useNavigate } from 'react-router-dom';
 
 const Menulist = (props) => {
     const [folders, setFolders] = useState([]);
+    const [isActive, setIsActive] = useState("");
+
+    const navigate = useNavigate();
 
     async function fetchFolders(){
         const FolderList = await getfolders();
@@ -23,23 +27,25 @@ const Menulist = (props) => {
     return (
         <div className={styles.container}>
             <div className={styles.logoContainer}>
-                <img src={logo} alt="error"></img>
+                <img src={logo} className={styles.logo} alt="error" onClick={function(){ navigate('/'); setIsActive("");}} ></img>
             </div>
             <div className={styles.buttonsContainer}>
-                <Button name="Add File" icon={addFileIcon} />
-                <Button name="Add Folder" icon={addFolderIcon} handleClick={props.setAddFolder} />
+                <Button name="File" icon={addFileIcon} setState={props.setAddFile} />
+                <Button name="Folder" icon={addFolderIcon} setState={props.setAddFolder} />
             </div>
             <div className={styles.folderContainer}>
                 {folders.map((folderData, index)=>{
                     return(
-                        <FolderTab name={folderData.name} key={index} />
+                        <FolderTab name={folderData.name} key={index} isActive={isActive} setIsActive={setIsActive} />
                     )
                 })}
             </div>
-            <button className={styles.lockBtn} onClick={() => props.setIsLoggedIn(0)}>
-                <img src={lockIcon} alt="error"></img>
-                Lock Now
-            </button>
+            <div className={styles.btnContainer}>
+                <button className={styles.lockBtn} onClick={function(){props.setIsLoggedIn(0); localStorage.isLoggedIn = false;}}>
+                    <img src={lockIcon} alt="error"></img>
+                    Lock Now
+                </button>
+            </div>
         </div>
     );
 };

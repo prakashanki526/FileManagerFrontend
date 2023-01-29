@@ -7,7 +7,10 @@
 
 
 .lower{
-    height: 75%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    /* border: 1px solid red; */
 }
 
 .btnContainer{
@@ -39,4 +42,10 @@
 .hr{
     margin-top: 20px;
     border: 0.1px solid rgb(231, 230, 230);
+}
+
+.crumbleContainer{
+    height: 30px;
+    color: #566474;
+    font-size: 18px;
 }

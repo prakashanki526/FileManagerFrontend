@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import Modal from 'react-modal';
 import styles from './Folder.module.css';
 import { createFolder } from '../api/discover';
+import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 const Folder = (props) => {
-    const [folderName, setFolderName] = useState("");
+    const [inputName, setInputName] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const customStyles = {
@@ -21,30 +23,55 @@ const Folder = (props) => {
         },
     };
 
+    const {folderName} = useParams();
+
     function handleChange(e){
-        setFolderName(e.target.value);
+        setInputName(e.target.value);
     }
 
     function handleKeypress(e){
         if(e.code === "Enter"){
-            handleClick();
+            props.type === "Folder" ? handleClickFolder() : handleClickFile();
             return;
         }
     }
 
-    async function handleClick(){
-        if(!folderName){
+    async function handleClickFolder(){
+        if(!inputName){
             setErrorMessage("** Enter folder name.");
             return;
         }
-        const result = await createFolder(folderName);
-        console.log(result);
+        const result = await createFolder(inputName);
+        
         if(result){
             props.setAddFolder(false);
+            toast("Folder created.");
         } else {
             setErrorMessage("Folder already exist.");
         }
-        setFolderName("");
+        setInputName("");
+    }
+
+    function handleClickFile(){
+        if(!inputName){
+            setErrorMessage("** Enter file name.");
+            return;
+        }
+        let doFileExist=false;
+        props.fileList.map((file,index)=>{
+            if(file.name === inputName){
+                toast("Filename already exist.");
+                doFileExist=true;
+                return;
+            }
+        });
+        if(!doFileExist){
+            props.setEditFile(true);
+            props.setAddFile(false);
+            props.setFileName(inputName);
+            setInputName("");
+            setErrorMessage("");
+        }
     }
 
     return (
@@ -52,23 +79,23 @@ const Folder = (props) => {
             <Modal
                 isOpen={true}
                 style={customStyles}
-                onRequestClose={()=> props.setAddFolder(false)}
+                onRequestClose={()=> props.type === "Folder" ? props.setAddFolder(false) : props.setAddFile(false)}
             >
             <div className={styles.container}>
                 <div className={styles.title}>
-                    Create Folder
+                    Create {props.type}
                 </div>
                 <div className={styles.content}>
-                    Enter folder name
+                    Enter {props.type} Name
                     <div className={styles.inputContainer}>
-                        <input type="text" value={folderName} maxLength="15" className={styles.inputField} onChange= 
+                        <input type="text" value={inputName} maxLength="15" className={styles.inputField} onChange= 
                             {handleChange} onKeyPress={handleKeypress} required/>
                     </div>
                     <div className={styles.errorMessage} style={{paddingTop: "5px", color: "red"}}>
                         {errorMessage}
                     </div>
                 </div>
-                <button className={styles.btn} onClick={handleClick}>Create now</button>
+                <button className={styles.btn} onClick={props.type === "Folder" ? handleClickFolder : handleClickFile}>Create now</button>
             </div>
             </Modal>
         </div>

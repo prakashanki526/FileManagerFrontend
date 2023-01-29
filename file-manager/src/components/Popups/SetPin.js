@@ -3,7 +3,7 @@ import styles from './Popups.module.css';
 import eye from '../assets/eyeIcon.svg';
 import Modal from 'react-modal';
 import { setPin } from '../api/discover';
-
+import { toast } from 'react-toastify';
 
 const SetPin = (props) => {
 
@@ -58,6 +58,14 @@ const SetPin = (props) => {
             setErrorMessage({inputPin: "** Enter a 4 digit pin."});
             return;
         }
+
+        for(var i=0;i<inputPin.length;i++){
+            if(isNaN(parseInt(inputPin[i]))){
+                setErrorMessage({inputPin: "** Pin must have digits only."});
+                return;
+            }
+        }
+        
         if(!confirmPin){
             setErrorMessage({confirmPin: "** Confirm pin first."});
             return;
@@ -68,6 +76,7 @@ const SetPin = (props) => {
         }
         setErrorMessage({});
         if(setPin(inputPin)){
+            toast("New Pin Set");
             props.setIsLoggedIn(true);
             localStorage.isPinSet = true;
             localStorage.isLoggedIn = true;
@@ -93,7 +102,7 @@ const SetPin = (props) => {
                 <div className={styles.content}>
                     <span>Enter New Pin</span><br></br>
                     <div className={styles.inputContainer}>
-                        <input type={type} value={inputPin} name="pin" maxLength="4" pattern="\d{4}" className={styles.inputField} onChange= 
+                        <input type={type} value={inputPin} name="pin" maxLength="4" pattern="\d{4}"  className={styles.inputField} onChange= 
                           {handleInputPinChange} required/>
                         <span onClick={handleClick} className={styles.eye}>
                             <img src={eye} alt="error" id="pin"></img>
