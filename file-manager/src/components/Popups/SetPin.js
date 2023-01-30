@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { setPin } from '../api/discover';
 import { toast } from 'react-toastify';
 
+
 const SetPin = (props) => {
 
     const [errorMessage, setErrorMessage] = useState({
@@ -97,7 +98,7 @@ const SetPin = (props) => {
     const check = localStorage.getItem("isPinSet");
 
     return (
-        <div>
+        <div className={styles.parent}>
             <Modal
                 isOpen={true}
                 style={customStyles}

@@ -4,6 +4,7 @@ import settingIcon from '../assets/settingIcon.svg';
 import logoutIcon from '../assets/logoutIcon.svg';
 import { useLocation } from 'react-router-dom';
 import FilesContainer from '../FilesContainer/FilesContainer';
+import searchIcon from '../assets/searchIcon.svg';
 
 const WorkFrame = (props) => {
     const [currentFile, setCurrentFile] = useState("");
@@ -17,11 +18,17 @@ const WorkFrame = (props) => {
         <div className={styles.container}>
             <div className={styles.upper}>
                 <div className={styles.btnContainer}>
-                    <div className={styles.btn} onClick={function(){props.setIsLoggedIn(false); localStorage.isLoggedIn = false; localStorage.isPinSet = false}}>
-                        <img src={logoutIcon} height="15px" alt="error"></img>
+                    <div className={styles.inputContainer}>
+                        <img src={searchIcon} alt="error" className={styles.searchIcon}></img>
+                        <input type="text" className={styles.inputField}></input>
                     </div>
-                    <div className={styles.btn} onClick={()=> props.setIsPasswordSet(0)}>
-                        <img src={settingIcon} height="15px" alt="error"></img>
+                    <div className={styles.btns}>
+                        <div className={styles.btn} onClick={function(){props.setIsLoggedIn(false); localStorage.isLoggedIn = false; localStorage.isPinSet = false}}>
+                            <img src={logoutIcon} height="15px" alt="error"></img>
+                        </div>
+                        <div className={styles.btn} onClick={()=> props.setIsPasswordSet(0)}>
+                            <img src={settingIcon} height="15px" alt="error"></img>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.crumbleContainer}>

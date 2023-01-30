@@ -52,6 +52,12 @@ const EditFile = (props) => {
         !props.content ? props.setEditFile(false) : props.setOpenFile(false);
     }
 
+    function handleFocus(e){
+        let x = e.target.value;
+        e.target.value= "";
+        e.target.value=x;
+    }
+
     return (
         <div>
             <Modal
@@ -63,7 +69,7 @@ const EditFile = (props) => {
                 <div className={styles.title}>{props.role} File</div>
                 <div className={styles.subtitle}>File name: {props.fileName}</div>
                 <div className={styles.textAreaContainer}>
-                    <textarea className={styles.textArea} value={content} onChange={handleChange} autoFocus></textarea>
+                    <textarea className={styles.textArea} value={content} disableUnderline={true} onChange={handleChange} onFocus={handleFocus} autoFocus></textarea>
                 </div>
                 <button className={styles.btn} onClick={!props.content ? handleAddClick : handleEditClick}>Save File</button>
             </div>

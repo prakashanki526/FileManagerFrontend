@@ -15,19 +15,33 @@
 
 .btnContainer{
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 3rem;
     /* position: absolute; */
     /* border: 1px solid red; */
 }
 
+.btns{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.inputField{
+    width: 30vw;
+    height: 25px;
+    border: 0.1px solid rgb(208, 208, 208);
+    border-radius: 3px;
+}
+
 .btn{
-    border: 0.5px solid grey;
-    padding: 5px;
+    border: 0.5px solid rgb(168, 167, 167);
+    padding: 7px;
     margin: 10px 15px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 3px;
 }
 
 .btn:hover{
@@ -46,7 +60,19 @@
 
 .crumbleContainer{
     height: 30px;
-    color: #566474;
+    color: #767f89;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 400;
+    margin-top: 20px;
+}
+
+.inputContainer{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.searchIcon{
+    position: absolute;
+    right: 10px;
 }
