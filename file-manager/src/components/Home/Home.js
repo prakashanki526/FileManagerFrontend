@@ -10,6 +10,7 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import EditFile from '../EditFile/EditFile';
 import { useParams } from 'react-router-dom';
+import { getAllFiles } from '../api/discover';
 
 const Home = () => {
     const [isPasswordSet, setIsPasswordSet] = useState(true);
@@ -20,6 +21,8 @@ const Home = () => {
     const [fileName, setFileName] = useState("");
     const [toggler, setToggler] = useState(true);
     const [fileList, setFileList] = useState([]);
+    const [allFilesList, setAllFilesList] = useState([]);
+    const [searchInputValue, setSearchInputValue] = useState("");
     
     const {folderName} = useParams();
 
@@ -42,6 +45,15 @@ const Home = () => {
         checkStatus();
     },[isPasswordSet]);
 
+    async function fetchAllFiles(){
+        const FilesList = await getAllFiles();
+        setAllFilesList(FilesList);
+    }
+
+    useEffect(()=>{
+        fetchAllFiles();
+    },[]);
+
     return (
         <div className={styles.body}>
             <ToastContainer position="top-center"
@@ -55,10 +67,10 @@ const Home = () => {
                     pauseOnHover
                     theme="dark" />
 
-            <Menulist setIsLoggedIn={setIsLoggedIn} setAddFolder={setAddFolder} setAddFile={setAddFile} />
+            <Menulist setIsLoggedIn={setIsLoggedIn} setAddFolder={setAddFolder} setAddFile={setAddFile} setSearchInputValue={setSearchInputValue} />
 
             <WorkFrame setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} fileList={fileList} setFileList={setFileList} toggler= 
-            {toggler} setToggler={setToggler} />
+            {toggler} setToggler={setToggler} allFilesList={allFilesList} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue} />
 
             {!isPasswordSet ? <SetPin setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} /> : !isLoggedIn && <LockNow setIsLoggedIn= 
              {setIsLoggedIn} />}

@@ -20,7 +20,7 @@ const FolderTab = (props) => {
             navigate(`/${folderName}`);
         }
         props.setIsActive(folderName);
-    },[])
+    },[folderName])
 
     return (
         <div className={props.isActive === props.name ? styles.containerSelected : styles.container} onClick={handleClick}>

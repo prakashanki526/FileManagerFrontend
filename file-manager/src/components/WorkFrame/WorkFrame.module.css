@@ -69,10 +69,33 @@
 .inputContainer{
     position: relative;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
+    flex-direction: column;
+}
+
+.suggestionContainer{
+    border: 0.1px solid rgb(208, 208, 208);
+    border-radius: 3px;
+    position: absolute;
+    top: 40px;
+    z-index: 100;
+    width: 100%;
+    background-color: white;
 }
 
 .searchIcon{
     position: absolute;
     right: 10px;
+    top: 7px;
+}
+
+.matchingFile{
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+}
+
+.matchingFile:hover{
+    cursor: pointer;
+    background-color: #cfdef5;
 }

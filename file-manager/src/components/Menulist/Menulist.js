@@ -25,7 +25,7 @@ const Menulist = (props) => {
     });
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} onClick={()=>props.setSearchInputValue("")}>
             <div className={styles.logoContainer}>
                 <img src={logo} className={styles.logo} alt="error" onClick={function(){ navigate('/'); setIsActive("");}} ></img>
             </div>
