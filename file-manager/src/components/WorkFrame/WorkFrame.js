@@ -7,6 +7,7 @@ import FilesContainer from '../FilesContainer/FilesContainer';
 import searchIcon from '../assets/searchIcon.svg';
 import matchingFileIcon from '../assets/matchingFileIcon.svg';
 import EditFile from '../EditFile/EditFile';
+import Select from 'react-select';
 
 const WorkFrame = (props) => {
     const [currentFile, setCurrentFile] = useState("");
@@ -32,16 +33,28 @@ const WorkFrame = (props) => {
         }
         const fileList = [];
         allFilesList.length && allFilesList.map((file, index)=>{
-            const fileName = file.name;
-            if(fileName.match(inputText)){
+            const fileName = file.name.toLowerCase();
+            if(fileName.match(inputText.toLowerCase())){
                 fileList.push(file);
             }
         });
         setMatchingFilesList(fileList);
     }
 
+    function setOptionList(fileList){
+        const list = [];
+        fileList.map((file,index)=>{
+            list.push({value: file.name , label:<div className={styles.matchingFile}> <img src={matchingFileIcon} alt="error"></img>&nbsp;&nbsp; {file.name}</div>, fileData: file});
+        });
+        setOptions(list);
+    }
+
+    useEffect(()=>{
+        setOptionList(matchingFilesList);
+    },[matchingFilesList])
+
     function handleInputChange(e){
-        const inputText = e.target.value;
+        const inputText = e;
         setInputValue(inputText);
         searchMatchingFiles(inputText);
     }
@@ -52,37 +65,58 @@ const WorkFrame = (props) => {
         }
     },[inputValue])
 
-    function handleClick(){
-        setMatchingFilesList([]);
-    }
-
     function handleOpenFile(file){
         setFileData(file);
         navigate(`/${file.folder}`);
         setInputValue("");
         setOpenFile(true);
         setSelectedFile(file.name);
+        setMatchingFilesList([]);
     }
 
     useEffect(()=>{
         !openFile && setSelectedFile("");
     },[openFile])
 
+    const [options, setOptions] = useState([]);
+    const [selectedOption, setSelectedOption] = useState(null);
+
+      useEffect(()=>{
+        if(selectedOption){
+            handleOpenFile(selectedOption.fileData);
+        }
+      },[selectedOption]);
+
+      function x(){
+        console.log("aa");
+        // focus();
+      }
+
     return (
-        <div className={styles.container} onClick={handleClick}>
+        <div className={styles.container}>
             {openFile && <EditFile role="Edit" setOpenFile={setOpenFile} fileName={fileData.name} folderName={fileData.folder} content={fileData.content} toggler={props.toggler} setToggler={props.setToggler} />}
             <div className={styles.upper}>
                 <div className={styles.btnContainer}>
                     <div className={styles.inputContainer}>
-                        <img src={searchIcon} alt="error" className={styles.searchIcon}></img>
-                        <input value={inputValue} type="text" className={styles.inputField} onChange={handleInputChange}></input>
-                        <div className={styles.suggestionContainer} style={{display: !matchingFilesList.length ? "none" : ""}}>
+                        {/* <img src={searchIcon} alt="error" className={styles.searchIcon}></img>
+                        <input value={inputValue} type="text" placeholder='search a file here...' className={styles.inputField} onChange={handleInputChange}></input> */}
+                        <Select
+                            onChange={setSelectedOption}
+                            options={options}
+                            className={styles.inputField}
+                            onInputChange={handleInputChange}
+                            value={inputValue}
+                            placeholder="search a file here..."
+                            // onFocus={setSelectedOption}
+                            onClick={x}
+                        />
+                        {/* <div className={styles.suggestionContainer} style={{display: !matchingFilesList.length ? "none" : ""}}>
                             {matchingFilesList.map((file,index)=>{
                                 return (
                                     <div className={styles.matchingFile} onClick={()=>handleOpenFile(file)} key={index}><img src={matchingFileIcon} alt="error"></img>&nbsp;&nbsp;{file.name}</div>
                                 )
                             })}
-                        </div>
+                        </div> */}
                     </div>
                     <div className={styles.btns}>
                         <div className={styles.btn} onClick={function(){props.setIsLoggedIn(false); localStorage.isLoggedIn = false; localStorage.isPinSet = false}}>

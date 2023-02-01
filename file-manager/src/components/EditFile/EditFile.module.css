@@ -56,3 +56,15 @@
 .btn:active{
     transform: translateY(1px);
 }
+
+.subtitleContainer{
+    display: flex;
+    /* border: 1px solid red; */
+    justify-content: space-between;
+    align-items:baseline;
+}
+
+.autoSave{
+    color: grey;
+    font-size: smaller;
+}

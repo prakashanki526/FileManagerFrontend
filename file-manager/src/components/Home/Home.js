@@ -52,7 +52,7 @@ const Home = () => {
 
     useEffect(()=>{
         fetchAllFiles();
-    },[]);
+    },[toggler]);
 
     return (
         <div className={styles.body}>

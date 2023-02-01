@@ -31,7 +31,7 @@ export async function createFolder(folderName) {
 }
 
 export async function getAllFiles() {
-    const reqUrl = `http://localhost:3001/discover/api/getallfiles`;
+    const reqUrl = `https://filemanagerbackend.onrender.com/discover/api/getallfiles`;
     const result = await axios.get(reqUrl);
     return result.data;
 }

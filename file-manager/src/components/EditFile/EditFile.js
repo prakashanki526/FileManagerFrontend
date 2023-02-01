@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styles from './EditFile.module.css';
 import Modal from 'react-modal';
 import { createFile } from '../api/discover';
@@ -22,6 +22,7 @@ const EditFile = (props) => {
 
     function handleChange(e){
         setContent(e.target.value);
+        optimizedFn(e.target.value);
     }
 
     async function handleAddClick(){
@@ -58,6 +59,36 @@ const EditFile = (props) => {
         e.target.value=x;
     }
 
+    async function handleAutoSave(content){
+        await createFile(props.fileName, props.folderName, content);
+        props.setToggler(!props.toggler);
+        setShowElement(true);
+    }
+
+    const debounce = (func) => {
+        let timer;
+        return function (...args) {
+          const context = this;
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => {
+            timer = null;
+            func.apply(context, args);
+          }, 500);
+        };
+      };
+
+      const optimizedFn = useCallback(debounce(handleAutoSave), []);
+
+      const [showElement,setShowElement] = useState(false);
+
+      useEffect(()=>{
+        setTimeout(function() {
+          setShowElement(false)
+             }, 2000);
+           },
+       [showElement])
+
+
     return (
         <div>
             <Modal
@@ -67,9 +98,12 @@ const EditFile = (props) => {
             >
             <div className={styles.container}>
                 <div className={styles.title}>{props.role} File</div>
-                <div className={styles.subtitle}>File name: {props.fileName}</div>
+                <div className={styles.subtitleContainer}>
+                    <div className={styles.subtitle}>File name: {props.fileName}</div>
+                    {showElement && <div className={styles.autoSave}>. . . auto saving</div>}
+                </div>
                 <div className={styles.textAreaContainer}>
-                    <textarea className={styles.textArea} value={content} disableUnderline={true} onChange={handleChange} onFocus={handleFocus} autoFocus></textarea>
+                    <textarea className={styles.textArea} value={content} onChange={handleChange} onFocus={handleFocus} autoFocus></textarea>
                 </div>
                 <button className={styles.btn} onClick={!props.content ? handleAddClick : handleEditClick}>Save File</button>
             </div>
