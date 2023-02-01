@@ -22,7 +22,9 @@ const EditFile = (props) => {
 
     function handleChange(e){
         setContent(e.target.value);
-        optimizedFn(e.target.value);
+        if(e.target.value){
+            optimizedFn(e.target.value);
+        }
     }
 
     async function handleAddClick(){
