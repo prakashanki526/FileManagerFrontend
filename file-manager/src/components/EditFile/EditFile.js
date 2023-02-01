@@ -23,7 +23,7 @@ const EditFile = (props) => {
     function handleChange(e){
         setContent(e.target.value);
         if(e.target.value){
-            optimizedFn(e.target.value);
+            // optimizedFn(e.target.value);
         }
     }
 
@@ -61,8 +61,9 @@ const EditFile = (props) => {
         e.target.value=x;
     }
 
-    async function handleAutoSave(content){
-        await createFile(props.fileName, props.folderName, content);
+    async function handleAutoSave(e){
+        // console.log(e);
+        await createFile(props.fileName, props.folderName, e.target.value);
         props.setToggler(!props.toggler);
         setShowElement(true);
     }
@@ -105,7 +106,7 @@ const EditFile = (props) => {
                     {showElement && <div className={styles.autoSave}>. . . auto saving</div>}
                 </div>
                 <div className={styles.textAreaContainer}>
-                    <textarea className={styles.textArea} value={content} onChange={handleChange} onFocus={handleFocus} autoFocus></textarea>
+                    <textarea className={styles.textArea} value={content} onChange={handleChange} onKeyUp={optimizedFn} onFocus={handleFocus} autoFocus></textarea>
                 </div>
                 <button className={styles.btn} onClick={!props.content ? handleAddClick : handleEditClick}>Save File</button>
             </div>
