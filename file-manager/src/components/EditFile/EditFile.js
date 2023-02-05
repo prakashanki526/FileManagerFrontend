@@ -9,7 +9,6 @@ import { convertFromHTML, convertToRaw, EditorState, ContentState} from 'draft-j
 import draftToHtml from 'draftjs-to-html';
 
 const EditFile = (props) => {
-    // const [content, setContent] = useState(props.content);
     const customStyles = {
         content: {
           top: '50%',
@@ -23,12 +22,6 @@ const EditFile = (props) => {
             background: "rgb(30, 39, 46,0.8)"
         },
     };
-
-    function handleChange(e){
-        if(e.target.value){
-            // optimizedFn(e.target.value);
-        }
-    }
 
     async function handleAddClick(){
         if(!editorState.getCurrentContent().getPlainText('\u0001')){
@@ -58,6 +51,7 @@ const EditFile = (props) => {
 
     function handleClose(){
         !props.content ? props.setEditFile(false) : props.setOpenFile(false);
+        props.setSelectedFile && props.setSelectedFile("");
     }
 
     async function handleAutoSave(editorState){

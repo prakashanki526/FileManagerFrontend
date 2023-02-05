@@ -61,11 +61,12 @@ const WorkFrame = (props) => {
         setFileData(file);
         navigate(`/${file.folder}`);
         setOpenFile(true);
+        setSelectedFile(file.name);
     }
 
     return (
         <div className={styles.container} onClick={()=>setInputValue("")}>
-            {openFile && <EditFile role="Edit" setOpenFile={setOpenFile} fileName={fileData.name} folderName={fileData.folder} content={fileData.content} toggler={toggler} setToggler={props.setToggler} setInputValue={setInputValue} />}
+            {openFile && <EditFile role="Edit" setOpenFile={setOpenFile} fileName={fileData.name} folderName={fileData.folder} content={fileData.content} toggler={toggler} setToggler={props.setToggler} setInputValue={setInputValue} setSelectedFile={setSelectedFile} />}
             <div className={styles.upper}>
                 <div className={styles.btnContainer}>
                     <div className={styles.inputContainer} onClick={()=>setInputValue("aa")}>
