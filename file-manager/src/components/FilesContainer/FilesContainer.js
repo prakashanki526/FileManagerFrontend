@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './FilesContainer.module.css';
 import DisplayFile from '../DisplayFile/DisplayFile';
 import { useParams } from 'react-router-dom';
@@ -8,6 +8,7 @@ import Root from '../Root/Root';
 const FilesContainer = (props) => {
     const {folderName} = useParams();
     const refresh = props.toggler;
+    // const allFilesList = props.allFilesList;
 
     async function fetchFiles(){
         const files = await getFiles(folderName);

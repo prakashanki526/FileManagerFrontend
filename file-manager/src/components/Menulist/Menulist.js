@@ -22,7 +22,7 @@ const Menulist = (props) => {
 
     useEffect(()=>{
         fetchFolders();
-    },[]);
+    },[props.toggler]);
 
     return (
         <div className={styles.container} onClick={()=>props.setSearchInputValue("")}>

@@ -22,6 +22,13 @@
     height: 40vh;
 }
 
+.editorContainer{
+    margin: 0px 0;
+    height: 40vh;
+    border: 0.1px solid rgb(213, 213, 213);
+    overflow-y: scroll;
+}
+
 .textArea{
     height: 100%;
     width: 100%;

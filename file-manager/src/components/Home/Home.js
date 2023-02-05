@@ -67,15 +67,15 @@ const Home = () => {
                     pauseOnHover
                     theme="dark" />
 
-            <Menulist setIsLoggedIn={setIsLoggedIn} setAddFolder={setAddFolder} setAddFile={setAddFile} setSearchInputValue={setSearchInputValue} />
+            <Menulist setIsLoggedIn={setIsLoggedIn} setAddFolder={setAddFolder} setAddFile={setAddFile} toggler={toggler} setSearchInputValue={setSearchInputValue} />
 
             <WorkFrame setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} fileList={fileList} setFileList={setFileList} toggler= 
-            {toggler} setToggler={setToggler} allFilesList={allFilesList} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue} />
+            {toggler} setToggler={setToggler} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue} allFilesList={allFilesList} />
 
             {!isPasswordSet ? <SetPin setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} /> : !isLoggedIn && <LockNow setIsLoggedIn= 
              {setIsLoggedIn} />}
 
-            {addFolder && <Folder setAddFolder={setAddFolder} type="Folder" /> }
+            {addFolder && <Folder setAddFolder={setAddFolder} type="Folder" toggler={toggler} setToggler={setToggler} /> }
 
             {addFile && <Folder setAddFile={setAddFile} type="File" setEditFile={setEditFile} fileList={fileList} setFileName={setFileName} 
              folderName={folderName} /> }

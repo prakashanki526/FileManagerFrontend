@@ -3,9 +3,13 @@ import styles from './EditFile.module.css';
 import Modal from 'react-modal';
 import { createFile } from '../api/discover';
 import { toast } from 'react-toastify';
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { convertFromHTML, convertToRaw, EditorState, ContentState} from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
 
 const EditFile = (props) => {
-    const [content, setContent] = useState(`${props.content ? props.content : ""}`);
+    // const [content, setContent] = useState(props.content);
     const customStyles = {
         content: {
           top: '50%',
@@ -21,18 +25,18 @@ const EditFile = (props) => {
     };
 
     function handleChange(e){
-        setContent(e.target.value);
         if(e.target.value){
             // optimizedFn(e.target.value);
         }
     }
 
     async function handleAddClick(){
-        if(!content){
+        if(!editorState.getCurrentContent().getPlainText('\u0001')){
             toast("File shouldn't be empty.");
             return;
         } else {
-            await createFile(props.fileName, props.folderName, content);
+            const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+            await createFile(props.fileName, props.folderName, encodeURIComponent(content));
             props.setToggler(!props.toggler);
             toast("File created.");
             props.setEditFile(false);
@@ -40,11 +44,12 @@ const EditFile = (props) => {
     }
 
     async function handleEditClick(){
-        if(!content){
+        if(!editorState.getCurrentContent().getPlainText('\u0001')){
             toast("File shouldn't be empty.");
             return;
         } else {
-            await createFile(props.fileName, props.folderName, content);
+            const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+            await createFile(props.fileName, props.folderName, encodeURIComponent(content));
             toast("File saved.");
             props.setOpenFile(false);
             props.setToggler(!props.toggler);
@@ -55,15 +60,9 @@ const EditFile = (props) => {
         !props.content ? props.setEditFile(false) : props.setOpenFile(false);
     }
 
-    function handleFocus(e){
-        let x = e.target.value;
-        e.target.value= "";
-        e.target.value=x;
-    }
-
-    async function handleAutoSave(e){
-        // console.log(e);
-        await createFile(props.fileName, props.folderName, e.target.value);
+    async function handleAutoSave(editorState){
+        const content = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+        await createFile(props.fileName, props.folderName, encodeURIComponent(content));
         props.setToggler(!props.toggler);
         setShowElement(true);
     }
@@ -89,8 +88,14 @@ const EditFile = (props) => {
           setShowElement(false)
              }, 2000);
            },
-       [showElement])
+       [showElement]);
 
+    const [editorState, setEditorState] = useState("");
+
+    useEffect(()=>{
+        const blocks = props.content ? convertFromHTML(props.content) : "";
+        props.content && setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(blocks.contentBlocks, blocks.entityMap)));
+    },[])
 
     return (
         <div>
@@ -105,9 +110,21 @@ const EditFile = (props) => {
                     <div className={styles.subtitle}>File name: {props.fileName}</div>
                     {showElement && <div className={styles.autoSave}>. . . auto saving</div>}
                 </div>
-                <div className={styles.textAreaContainer}>
-                    <textarea className={styles.textArea} value={content} onChange={handleChange} onKeyUp={optimizedFn} onFocus={handleFocus} autoFocus></textarea>
-                </div>
+
+                    <div className={styles.editorContainer} onKeyUp={()=>optimizedFn(editorState)}>
+                        <Editor
+                            editorState={editorState}
+                            toolbarClassName="toolbarClassName"
+                            wrapperClassName='wrapperClassName'
+                            editorClassName='editorClassName'
+                            onEditorStateChange={setEditorState}
+                            toolbar={{
+                                options: ['inline'],
+                                inline: { inDropdown: false, options: ['bold', 'italic', 'underline'] }
+                            }}
+                        />
+                    </div>
+
                 <button className={styles.btn} onClick={!props.content ? handleAddClick : handleEditClick}>Save File</button>
             </div>
             </Modal>

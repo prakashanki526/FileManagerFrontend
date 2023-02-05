@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 import styles from './Folder.module.css';
 import { createFolder } from '../api/discover';
 import { toast } from 'react-toastify';
-import { useParams } from 'react-router-dom';
 
 const Folder = (props) => {
     const [inputName, setInputName] = useState("");
@@ -45,6 +44,7 @@ const Folder = (props) => {
         
         if(result){
             props.setAddFolder(false);
+            props.setToggler(!props.toggler);
             toast("Folder created.");
         } else {
             setErrorMessage("Folder already exist.");

@@ -45,6 +45,5 @@ export async function getFiles(folderName) {
 export async function createFile(fileName,folderName,content) {
     const reqUrl = `https://filemanagerbackend.onrender.com/discover/api/createfile?folderName=${folderName}&fileName=${fileName}&content=${content}`;
     const result = await axios.post(reqUrl,fileName);
-    console.log(result.data);
     return result.data;
 }
