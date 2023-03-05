@@ -23,6 +23,7 @@ const Home = () => {
     const [fileList, setFileList] = useState([]);
     const [allFilesList, setAllFilesList] = useState([]);
     const [searchInputValue, setSearchInputValue] = useState("");
+    const [spinner, setSpinner] = useState(false);
     
     const {folderName} = useParams();
 
@@ -46,8 +47,10 @@ const Home = () => {
     },[isPasswordSet]);
 
     async function fetchAllFiles(){
+        setSpinner(true);
         const FilesList = await getAllFiles();
         setAllFilesList(FilesList);
+        setSpinner(false);
     }
 
     useEffect(()=>{
@@ -70,7 +73,7 @@ const Home = () => {
             <Menulist setIsLoggedIn={setIsLoggedIn} setAddFolder={setAddFolder} setAddFile={setAddFile} toggler={toggler} setSearchInputValue={setSearchInputValue} />
 
             <WorkFrame setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} fileList={fileList} setFileList={setFileList} toggler= 
-            {toggler} setToggler={setToggler} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue} allFilesList={allFilesList} />
+            {toggler} setToggler={setToggler} spinner={spinner} searchInputValue={searchInputValue} setSearchInputValue={setSearchInputValue} allFilesList={allFilesList} />
 
             {!isPasswordSet ? <SetPin setIsLoggedIn={setIsLoggedIn} setIsPasswordSet={setIsPasswordSet} /> : !isLoggedIn && <LockNow setIsLoggedIn= 
              {setIsLoggedIn} />}
